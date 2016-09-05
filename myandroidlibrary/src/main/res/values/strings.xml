@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">My Android Library</string>
+    <string name="AL_JOKE_KEY">AL_JOKE_Key</string>
+</resources>
