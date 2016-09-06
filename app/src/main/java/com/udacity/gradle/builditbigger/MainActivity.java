@@ -13,6 +13,8 @@ import android.view.View;
 import com.example.Joker;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.udacity.yang.backend.myApi.MyApi;
 import com.udacity.yang.backend.myApi.model.MyBean;
 
@@ -37,15 +39,16 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
                     // - 10.0.2.2 is localhost's IP address in Android emulator
                     // - turn off compression when running against local devappserver
                     .setRootUrl("http://73.200.152.195:8080/_ah/spi/")
-                    .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-                        @Override
-                        public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
-                            abstractGoogleClientRequest.setDisableGZipContent(true);
-                        }
-                    });
+
             // end options for devappserver*/
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
-                    .setRootUrl("https://builditbigger-yyz.appspot.com/_ah/api/");
+                    .setRootUrl("https://builditbigger-yyz.appspot.com/_ah/api/")
+            .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                @Override
+                public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                    abstractGoogleClientRequest.setDisableGZipContent(true);
+                }
+            });
 
             myApiService = builder.build();
         }
